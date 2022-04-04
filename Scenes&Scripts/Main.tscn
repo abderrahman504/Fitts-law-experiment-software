@@ -1,0 +1,143 @@
+[gd_scene load_steps=14 format=2]
+
+[ext_resource path="res://Scenes&Scripts/Main.gd" type="Script" id=1]
+[ext_resource path="res://Scenes&Scripts/Home.gd" type="Script" id=2]
+[ext_resource path="res://Sprites/Circle.png" type="Texture" id=3]
+[ext_resource path="res://Sprites/Blank Background.png" type="Texture" id=4]
+[ext_resource path="res://Fonts/axaxax bd.ttf" type="DynamicFontData" id=5]
+[ext_resource path="res://Scenes&Scripts/Rect R.gd" type="Script" id=6]
+[ext_resource path="res://Scenes&Scripts/Rect L.gd" type="Script" id=7]
+[ext_resource path="res://Scenes&Scripts/Cycle Counter.gd" type="Script" id=8]
+[ext_resource path="res://Scenes&Scripts/Game Counter.gd" type="Script" id=9]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 10, 250 )
+
+[sub_resource type="CircleShape2D" id=2]
+radius = 170.0
+
+[sub_resource type="DynamicFont" id=3]
+size = 50
+font_data = ExtResource( 5 )
+
+[sub_resource type="Environment" id=4]
+background_mode = 1
+background_color = Color( 0.976471, 0.0666667, 0.0666667, 1 )
+
+[node name="Main" type="Node2D"]
+script = ExtResource( 1 )
+
+[node name="Camera2D" type="Camera2D" parent="."]
+current = true
+
+[node name="Rect L" type="Area2D" parent="."]
+visible = false
+position = Vector2( -150, 0 )
+script = ExtResource( 7 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Rect L"]
+shape = SubResource( 1 )
+
+[node name="TextureRect" type="TextureRect" parent="Rect L"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -10.0
+margin_top = -250.0
+margin_right = 10.0
+margin_bottom = 250.0
+mouse_filter = 2
+texture = ExtResource( 4 )
+expand = true
+__meta__ = {
+"_edit_group_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="Home" type="Area2D" parent="."]
+scale = Vector2( 0.05, 0.05 )
+script = ExtResource( 2 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Home"]
+shape = SubResource( 2 )
+
+[node name="Sprite" type="Sprite" parent="Home"]
+texture = ExtResource( 3 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Rect R" type="Area2D" parent="."]
+visible = false
+position = Vector2( 150, 0 )
+script = ExtResource( 6 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Rect R"]
+shape = SubResource( 1 )
+
+[node name="TextureRect" type="TextureRect" parent="Rect R"]
+margin_left = -10.0
+margin_top = -250.0
+margin_right = 10.0
+margin_bottom = 250.0
+mouse_filter = 2
+texture = ExtResource( 4 )
+expand = true
+__meta__ = {
+"_edit_group_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="Cycle Counter" type="Label" parent="."]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -75.0
+margin_top = -300.0
+margin_right = 75.0
+margin_bottom = -239.0
+custom_fonts/font = SubResource( 3 )
+text = "0/8"
+align = 1
+script = ExtResource( 8 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Next Game" type="Label" parent="."]
+visible = false
+margin_left = -95.7317
+margin_top = 106.49
+margin_right = 283.268
+margin_bottom = 487.49
+rect_scale = Vector2( 0.5, 0.5 )
+custom_fonts/font = SubResource( 3 )
+text = "Well done!
+click the home circle again for the next test"
+align = 1
+autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Game Counter" type="Label" parent="."]
+margin_left = -564.842
+margin_top = -300.0
+margin_right = -365.842
+margin_bottom = -239.0
+rect_scale = Vector2( 0.8, 0.8 )
+custom_fonts/font = SubResource( 3 )
+text = "Tests: 0/"
+script = ExtResource( 9 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource( 4 )
+
+[connection signal="mouse_entered" from="Rect L" to="Rect L" method="on_mouse_entered"]
+[connection signal="mouse_exited" from="Rect L" to="Rect L" method="on_mouse_exited"]
+[connection signal="mouse_entered" from="Home" to="Home" method="_on_Home_mouse_entered"]
+[connection signal="mouse_entered" from="Rect R" to="Rect R" method="on_mouse_entered"]
+[connection signal="mouse_exited" from="Rect R" to="Rect R" method="on_mouse_exited"]
